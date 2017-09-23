@@ -1,0 +1,215 @@
+python 3.6.2 설치
+> https://www.python.org/downloads/
+
+
+ipython, jupyter notebook 
+> python콘솔에서
+> http://jupyter.org/install.html
+
+
+visual studio code
+ctrl+shift+p
+- ext install 
+python
+python 작성하면 없는 라이브러리를 터미널에서 설치하겠냐고 가이드. pip3 install request 관련
+Ctrl+F5   시작
+Shift+F5  종료
+
+우클릭 run python file in terminal
+
+
+
+
+http://jsoneditoronline.org/
+
+------------------------------------------------------------------------------------------------------------------------
+<네이버 맞춤법 검사기>
+
+1. 페이지 분석
+https://m.search.naver.com/p/csearch/dcontent/spellchecker.nhn?_callback=window.__jindo2_callback._spellingCheck_0&q=%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%95%B1%EA%B0%9C%EB%B0%9C%EC%99%84%EB%B2%BD%EA%B0%80%EC%9D%B4%EB%93%9C
+F12 네트워크 탭
+Header, response 살펴보기
+
+
+jsonp 라는 방식.
+함수이름 정해서 넘겨주고 
+같은 이름으로 되돌려 받기
+
+
+
+
+2. request 사용
+#url 이 모바일로 바뀌어서 headers 를 추가해줘야 동작했다. 없을시 404 에러
+headers = {
+    'User-Agent' : 'Mozilla/5.0 (Windows; U; Windows NT 6.1; ko; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8 IPMS/A640400A-14D460801A1-000000426571',   # firefox UserAgent
+}
+
+url = "https://m.search.naver.com/p/csearch/dcontent/spellchecker.nhn?_callback=window.__jindo2_callback._spellingCheck_0&q=%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%95%B1%EA%B0%9C%EB%B0%9C%EC%99%84%EB%B2%BD%EA%B0%80%EC%9D%B4%EB%93%9C"
+
+requests.get(url, headers=headers)
+
+
+params로 구분 나누기
+response = requests.get(url, params=params, headers=headers).text
+
+
+3. json 형태로 변환
+response = response.replace('~~~~', '').replace(');', '')
+
+json.loads(response)
+
+
+4. 결과데이터 추출 & 정리
+http://blog.naver.com/PostView.nhn?blogId=dudwo567890&logNo=130162403749
+http://zeany.net/46
+http://egloos.zum.com/sweeper/v/3065126
+
+result_text = response_dic['message']['result']['html']
+result_text = re.sub(r'<\/?.*?>', '', result_text)
+
+
+
+
+인자로 넘기기
+def function(q):
+	return string
+	
+
+메인함수 설정 args 사용
+if __name__ == '__main__':
+
+------------------------------------------------------------------------------------------------------------------------
+
+<멜론 >
+http://www.melon.com/
+
+오토 컴플릿
+노래, 앨범, 아티스트
+
+검색 분석
+headers-request url
+http://www.melon.com/search/keyword/index.json?jscallback=jQuery19108967440193148157_1506065468854&query=%25EC%2595%2584&_=1506065468871
+
+response
+jQuery19108967440193148157_1506065468854({"STATUS":"0","KEYWORD":"아","ARTISTCONTENTS":[{"ARTISTID":"261143","ARTISTNAME":"아이유","ARTISTNAMEDP":"<b>아</b>이유","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/002/61/143/261143_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"여성","ACTTYPENAMES":"솔로"},{"ARTISTID":"712452","ARTISTNAME":"악동뮤지션","ARTISTNAMEDP":"악동뮤지션","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/007/12/452/712452_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"혼성","ACTTYPENAMES":"그룹"},{"ARTISTID":"895741","ARTISTNAME":"iKON","ARTISTNAMEDP":"iKON","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/008/95/741/895741_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"남성","ACTTYPENAMES":"그룹"},{"ARTISTID":"597451","ARTISTNAME":"Ariana Grande","ARTISTNAMEDP":"Ariana Grande","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/005/97/451/597451_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"미국","SEX":"여성","ACTTYPENAMES":"솔로"},{"ARTISTID":"1705423","ARTISTNAME":"IZ (아이즈)","ARTISTNAMEDP":"IZ (<b>아</b>이즈)","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/017/05/423/1705423_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"남성","ACTTYPENAMES":"그룹"},{"ARTISTID":"14737","ARTISTNAME":"아이","ARTISTNAMEDP":"<b>아</b>이","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/000/14/737/14737_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"남성","ACTTYPENAMES":"솔로"},{"ARTISTID":"161473","ARTISTNAME":"Arashi","ARTISTNAMEDP":"Arashi","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/001/61/473/161473_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"일본","SEX":"남성","ACTTYPENAMES":"그룹"},{"ARTISTID":"241925","ARTISTNAME":"Adele","ARTISTNAMEDP":"Adele","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/002/41/925/241925_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"영국","SEX":"여성","ACTTYPENAMES":"솔로"},{"ARTISTID":"960251","ARTISTNAME":"아이오아이 (I.O.I)","ARTISTNAMEDP":"<b>아</b>이오<b>아</b>이 (I.O.I)","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/009/60/251/960251_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"여성","ACTTYPENAMES":"그룹"},{"ARTISTID":"945766","ARTISTNAME":"아스트로 (ASTRO)","ARTISTNAMEDP":"<b>아</b>스트로 (ASTRO)","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/009/45/766/945766_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"남성","ACTTYPENAMES":"그룹"},{"ARTISTID":"947099","ARTISTNAME":"안예은","ARTISTNAMEDP":"안예은","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/009/47/099/947099_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"여성","ACTTYPENAMES":"솔로"},{"ARTISTID":"529182","ARTISTNAME":"Avicii","ARTISTNAMEDP":"Avicii","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/005/29/182/529182_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"스웨덴","SEX":"남성","ACTTYPENAMES":"솔로"},{"ARTISTID":"749041","ARTISTNAME":"안녕하신가영","ARTISTNAMEDP":"안녕하신가영","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/007/49/041/749041_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"여성","ACTTYPENAMES":"솔로"},{"ARTISTID":"943471","ARTISTNAME":"Alan Walker","ARTISTNAMEDP":"Alan Walker","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/009/43/471/943471_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"노르웨이","SEX":"남성","ACTTYPENAMES":"솔로"},{"ARTISTID":"960306","ARTISTNAME":"안지영","ARTISTNAMEDP":"안지영","ARITSTIMG":"http://cdnimg.melon.co.kr/cm/artistcrop/images/009/60/306/960306_500.jpg/melon/resize/40/quality/80/optimize","NATIONALITYNAME":"대한민국","SEX":"여성","ACTTYPENAMES":"솔로"}],"SONGCONTENTS":[{"SONGID":"30314784","SONGNAME":"밤편지","SONGNAMEDP":"밤편지","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/47/890/10047890_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10047890","ALBUMNAME":"밤편지","ARTISTNAME":"아이유"},{"SONGID":"4645220","SONGNAME":"나의 옛날이야기","SONGNAMEDP":"나의 옛날이야기","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"2256290","ALBUMNAME":"꽃갈피","ARTISTNAME":"아이유"},{"SONGID":"4182990","SONGNAME":"아모르 파티","SONGNAMEDP":"<b>아</b>모르 파티","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/021/93/965/2193965_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"2193965","ALBUMNAME":"아모르 파티","ARTISTNAME":"김연자"},{"SONGID":"30378156","SONGNAME":"팔레트 (Feat. G-DRAGON)","SONGNAMEDP":"팔레트 (Feat. G-DRAGON)","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10056666","ALBUMNAME":"Palette","ARTISTNAME":"아이유"},{"SONGID":"30536155","SONGNAME":"DINOSAUR","SONGNAMEDP":"DINOSAUR","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/81/450/10081450_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10081450","ALBUMNAME":"SUMMER EPISODE","ARTISTNAME":"악동뮤지션"},{"SONGID":"30495638","SONGNAME":"아침에 (Feat. Bryn)","SONGNAMEDP":"<b>아</b>침에 (Feat. Bryn)","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/74/941/10074941_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10074941","ALBUMNAME":"아침에","ARTISTNAME":"양홍원 (Young B)"},{"SONGID":"5700639","SONGNAME":"마음","SONGNAMEDP":"마음","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/023/19/008/2319008_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"2319008","ALBUMNAME":"마음","ARTISTNAME":"아이유"},{"SONGID":"3795586","SONGNAME":"하루 끝","SONGNAMEDP":"하루 끝","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/021/21/646/2121646_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"2121646","ALBUMNAME":"스무 살의 봄","ARTISTNAME":"아이유"},{"SONGID":"30378164","SONGNAME":"이름에게","SONGNAMEDP":"이름에게","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10056666","ALBUMNAME":"Palette","ARTISTNAME":"아이유"},{"SONGID":"4369827","SONGNAME":"금요일에 만나요 (Feat. 장이정 Of HISTORY)","SONGNAMEDP":"금요일에 만나요 (Feat. 장이정 Of HISTORY)","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/022/22/587/2222587_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"2222587","ALBUMNAME":"Modern Times - Epilogue","ARTISTNAME":"아이유"},{"SONGID":"30378155","SONGNAME":"이 지금","SONGNAMEDP":"이 지금","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10056666","ALBUMNAME":"Palette","ARTISTNAME":"아이유"},{"SONGID":"30181278","SONGNAME":"오랜 날 오랜 밤","SONGNAMEDP":"오랜 날 오랜 밤","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/27/786/10027786_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10027786","ALBUMNAME":"사춘기 하 (思春記 下)","ARTISTNAME":"악동뮤지션"},{"SONGID":"4646573","SONGNAME":"너의 의미 (Feat. 김창완)","SONGNAMEDP":"너의 의미 (Feat. 김창완)","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"2256290","ALBUMNAME":"꽃갈피","ARTISTNAME":"아이유"},{"SONGID":"30349593","SONGNAME":"사랑이 잘 (With 오혁)","SONGNAMEDP":"사랑이 잘 (With 오혁)","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/52/968/10052968_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10052968","ALBUMNAME":"사랑이 잘","ARTISTNAME":"아이유"},{"SONGID":"30378157","SONGNAME":"이런 엔딩","SONGNAMEDP":"이런 엔딩","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/optimize","ALBUMID":"10056666","ALBUMNAME":"Palette","ARTISTNAME":"아이유"}],"ALBUMCONTENTS":[{"ALBUMID":"10056666","ALBUMNAME":"Palette","ALBUMNAMEDP":"Palette","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"2256290","ALBUMNAME":"꽃갈피","ALBUMNAMEDP":"꽃갈피","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"10047890","ALBUMNAME":"밤편지","ALBUMNAMEDP":"밤편지","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/47/890/10047890_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"2646282","ALBUMNAME":"CHAT-SHIRE","ALBUMNAMEDP":"CHAT-SHIRE","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"10052968","ALBUMNAME":"사랑이 잘","ALBUMNAMEDP":"사랑이 잘","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/52/968/10052968_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"2222587","ALBUMNAME":"Modern Times - Epilogue","ALBUMNAMEDP":"Modern Times - Epilogue","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/022/22/587/2222587_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"2040666","ALBUMNAME":"Last Fantasy","ALBUMNAMEDP":"Last Fantasy","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/020/40/666/2040666_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"1093562","ALBUMNAME":"Real","ALBUMNAMEDP":"Real","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/010/93/562/1093562_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"10081450","ALBUMNAME":"SUMMER EPISODE","ALBUMNAMEDP":"SUMMER EPISODE","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/81/450/10081450_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"악동뮤지션"},{"ALBUMID":"2121646","ALBUMNAME":"스무 살의 봄","ALBUMNAMEDP":"스무 살의 봄","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/021/21/646/2121646_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"2208448","ALBUMNAME":"Modern Times","ALBUMNAMEDP":"Modern Times","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/022/08/448/2208448_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"2319008","ALBUMNAME":"마음","ALBUMNAMEDP":"마음","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/023/19/008/2319008_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"10027786","ALBUMNAME":"사춘기 하 (思春記 下)","ALBUMNAMEDP":"사춘기 하 (思春記 下)","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/100/27/786/10027786_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"악동뮤지션"},{"ALBUMID":"1173161","ALBUMNAME":"Real+","ALBUMNAMEDP":"Real+","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/011/73/161/1173161_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"},{"ALBUMID":"718505","ALBUMNAME":"IU...IM","ALBUMNAMEDP":"IU...IM","ALBUMIMG":"http://cdnimg.melon.co.kr/cm/album/images/007/18/505/718505_500.jpg/melon/resize/40/quality/80/optimize","ARTISTNAME":"아이유"}],"KEYWORDCONTENTS":[{"KEYWORDDP":"<b>아</b>이유","KEYWORD":"아이유"},{"KEYWORDDP":"악동뮤지션","KEYWORD":"악동뮤지션"},{"KEYWORDDP":"<b>아</b>모르 파티","KEYWORD":"아모르 파티"},{"KEYWORDDP":"알리","KEYWORD":"알리"},{"KEYWORDDP":"<b>아</b>리<b>아</b>나 그란데","KEYWORD":"아리아나 그란데"},{"KEYWORDDP":"<b>아</b>침에","KEYWORD":"아침에"},{"KEYWORDDP":"<b>아</b>이오<b>아</b>이","KEYWORD":"아이오아이"},{"KEYWORDDP":"<b>아</b>델","KEYWORD":"아델"},{"KEYWORDDP":"<b>아</b>이콘","KEYWORD":"아이콘"},{"KEYWORDDP":"안<b>아</b>줘","KEYWORD":"안아줘"},{"KEYWORDDP":"<b>아</b>웃사이더","KEYWORD":"아웃사이더"},{"KEYWORDDP":"<b>아</b>름다워","KEYWORD":"아름다워"},{"KEYWORDDP":"안예은","KEYWORD":"안예은"},{"KEYWORDDP":"<b>아</b>버지","KEYWORD":"아버지"},{"KEYWORDDP":"안녕하신가영","KEYWORD":"안녕하신가영"}],"httpDomain":"http://www.melon.com","httpsDomain":"https://www.melon.com","staticDomain":"https://static.melon.co.kr"});
+
+
+url, params 로 나누기
+response = requests.get(url, params=params).text
+
+안쓰는 블럭 스트링 제거
+jQuery19108967440193148157_1506065468854(     );  replace 로 제거
+json_string = response.replace(params['jscallback'] + '(', '').replace(');', '')
+
+
+json 으로 변환
+result_dict = json.loads(json_string)
+
+
+code 에디터에서 우클릭 해서 실행한뒤에 다시 -i 로 실행 
+
+result_dict.keys()
+
+result_dict['SONGCONTENTS']  체크 
+
+
+
+노래 URL 찾기 
+오토컴플릿 보여지는 상태에서 노래 눌러서 진입 후 URL 확인
+http://www.melon.com/song/detail.htm?songId=30314784
+
+
+노래 정보 출력
+for song in result_dict['SONGCONTENTS']:
+	print('''{SONGNAME} {ALBUMNAME} {ARTISTNAME} 
+	url= {SONGID}'''.format(**song))
+#	print(song['SONGNAME'], song['ALBUMNAME'], song['ARTISTNAME']) 
+
+
+노래 없을 경우 예외 처리
+if 'SONGCONTENTS' not in result_dict:
+	print(x)
+else:
+	print(o)
+
+
+인자로 넘기기
+def function(q):
+	
+
+메인함수 설정 args 사용
+if __name__ == '__main__':
+
+
+
+
+
+{'STATUS': '0', 'KEYWORD': '아이유', 'ARTISTCONTENTS': [{'ARTISTID': '261143', 'ARTISTNAME': '아이유', 'ARTISTNAMEDP': '<b>아이유</b>', 'ARI
+TSTIMG': 'http://cdnimg.melon.co.kr/cm/artistcrop/images/002/61/143/261143_500.jpg/melon/resize/40/quality/80/optimize', 'NATIONALITYNAME':
+'대한민국', 'SEX': '여성', 'ACTTYPENAMES': '솔로'}, {'ARTISTID': '560205', 'ARTISTNAME': 'IUV', 'ARTISTNAMEDP': 'IUV', 'ARITSTIMG': 'http://
+cdnimg.melon.co.kr/cm/artistcrop/images/005/60/205/560205_500.jpg/melon/resize/40/quality/80/optimize', 'NATIONALITYNAME': '대한민국', 'SEX'
+: '여성', 'ACTTYPENAMES': '그룹'}, {'ARTISTID': '167076', 'ARTISTNAME': '아이유악대', 'ARTISTNAMEDP': '<b>아이유</b>악대', 'ARITSTIMG': '',
+'NATIONALITYNAME': '중국', 'SEX': '남성', 'ACTTYPENAMES': '솔로'}], 'SONGCONTENTS': [{'SONGID': '30314784', 'SONGNAME': '밤편지', 'SONGNAMED
+P': '밤편지', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/47/890/10047890_500.jpg/melon/resize/40/quality/80/optimize', 'ALBU
+MID': '10047890', 'ALBUMNAME': '밤편지', 'ARTISTNAME': '아이유'}, {'SONGID': '4645220', 'SONGNAME': '나의 옛날이야기', 'SONGNAMEDP': '나의
+옛날이야기', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg/melon/resize/40/quality/80/optimize', 'ALBUMI
+D': '2256290', 'ALBUMNAME': '꽃갈피', 'ARTISTNAME': '아이유'}, {'SONGID': '30378156', 'SONGNAME': '팔레트 (Feat. G-DRAGON)', 'SONGNAMEDP': '
+팔레트 (Feat. G-DRAGON)', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/opti
+mize', 'ALBUMID': '10056666', 'ALBUMNAME': 'Palette', 'ARTISTNAME': '아이유'}, {'SONGID': '5700639', 'SONGNAME': '마음', 'SONGNAMEDP': '마음
+', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/023/19/008/2319008_500.jpg/melon/resize/40/quality/80/optimize', 'ALBUMID': '23190
+08', 'ALBUMNAME': '마음', 'ARTISTNAME': '아이유'}, {'SONGID': '4369827', 'SONGNAME': '금요일에 만나요 (Feat. 장이정 Of HISTORY)', 'SONGNAMED
+P': '금요일에 만나요 (Feat. 장이정 Of HISTORY)', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/022/22/587/2222587_500.jpg/melon/res
+ize/40/quality/80/optimize', 'ALBUMID': '2222587', 'ALBUMNAME': 'Modern Times - Epilogue', 'ARTISTNAME': '아이유'}, {'SONGID': '3795586', 'S
+ONGNAME': '하루 끝', 'SONGNAMEDP': '하루 끝', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/021/21/646/2121646_500.jpg/melon/resize
+/40/quality/80/optimize', 'ALBUMID': '2121646', 'ALBUMNAME': '스무 살의 봄', 'ARTISTNAME': '아이유'}, {'SONGID': '30378164', 'SONGNAME': '이
+름에게', 'SONGNAMEDP': '이름에게', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/qualit
+y/80/optimize', 'ALBUMID': '10056666', 'ALBUMNAME': 'Palette', 'ARTISTNAME': '아이유'}, {'SONGID': '30378155', 'SONGNAME': '이 지금', 'SONGN
+AMEDP': '이 지금', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/optimize',
+'ALBUMID': '10056666', 'ALBUMNAME': 'Palette', 'ARTISTNAME': '아이유'}, {'SONGID': '4646573', 'SONGNAME': '너의 의미 (Feat. 김창완)', 'SONGN
+AMEDP': '너의 의미 (Feat. 김창완)', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.jpg/melon/resize/40/qualit
+y/80/optimize', 'ALBUMID': '2256290', 'ALBUMNAME': '꽃갈피', 'ARTISTNAME': '아이유'}, {'SONGID': '30349593', 'SONGNAME': '사랑이 잘 (With 오
+혁)', 'SONGNAMEDP': '사랑이 잘 (With 오혁)', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/52/968/10052968_500.jpg/melon/resize
+/40/quality/80/optimize', 'ALBUMID': '10052968', 'ALBUMNAME': '사랑이 잘', 'ARTISTNAME': '아이유'}, {'SONGID': '30378157', 'SONGNAME': '이런
+ 엔딩', 'SONGNAMEDP': '이런 엔딩', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/qualit
+y/80/optimize', 'ALBUMID': '10056666', 'ALBUMNAME': 'Palette', 'ARTISTNAME': '아이유'}, {'SONGID': '7896508', 'SONGNAME': '스물셋', 'SONGNAM
+EDP': '스물셋', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg/melon/resize/40/quality/80/optimize', 'ALB
+UMID': '2646282', 'ALBUMNAME': 'CHAT-SHIRE', 'ARTISTNAME': '아이유'}, {'SONGID': '7896509', 'SONGNAME': '푸르던', 'SONGNAMEDP': '푸르던', 'A
+LBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/026/46/282/2646282_500.jpg/melon/resize/40/quality/80/optimize', 'ALBUMID': '2646282',
+'ALBUMNAME': 'CHAT-SHIRE', 'ARTISTNAME': '아이유'}, {'SONGID': '3051244', 'SONGNAME': '좋은 날', 'SONGNAMEDP': '좋은 날', 'ALBUMIMG': 'http:
+//cdnimg.melon.co.kr/cm/album/images/010/93/562/1093562_500.jpg/melon/resize/40/quality/80/optimize', 'ALBUMID': '1093562', 'ALBUMNAME': 'Re
+al', 'ARTISTNAME': '아이유'}, {'SONGID': '3143550', 'SONGNAME': '나만 몰랐던 이야기', 'SONGNAMEDP': '나만 몰랐던 이야기', 'ALBUMIMG': 'http:
+//cdnimg.melon.co.kr/cm/album/images/011/73/161/1173161_500.jpg/melon/resize/40/quality/80/optimize', 'ALBUMID': '1173161', 'ALBUMNAME': 'Re
+al+', 'ARTISTNAME': '아이유'}], 'ALBUMCONTENTS': [{'ALBUMID': '10056666', 'ALBUMNAME': 'Palette', 'ALBUMNAMEDP': 'Palette', 'ALBUMIMG': 'htt
+p://cdnimg.melon.co.kr/cm/album/images/100/56/666/10056666_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID'
+: '2256290', 'ALBUMNAME': '꽃갈피', 'ALBUMNAMEDP': '꽃갈피', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/022/56/290/2256290_500.j
+pg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '10047890', 'ALBUMNAME': '밤편지', 'ALBUMNAMEDP': '밤편지', 'A
+LBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/47/890/10047890_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유
+'}, {'ALBUMID': '2646282', 'ALBUMNAME': 'CHAT-SHIRE', 'ALBUMNAMEDP': 'CHAT-SHIRE', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/02
+6/46/282/2646282_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '10052968', 'ALBUMNAME': '사랑이 잘', 'A
+LBUMNAMEDP': '사랑이 잘', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/100/52/968/10052968_500.jpg/melon/resize/40/quality/80/opti
+mize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '2222587', 'ALBUMNAME': 'Modern Times - Epilogue', 'ALBUMNAMEDP': 'Modern Times - Epilogue', 'AL
+BUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/022/22/587/2222587_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}
+, {'ALBUMID': '2040666', 'ALBUMNAME': 'Last Fantasy', 'ALBUMNAMEDP': 'Last Fantasy', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/
+020/40/666/2040666_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '1093562', 'ALBUMNAME': 'Real', 'ALBUM
+NAMEDP': 'Real', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/010/93/562/1093562_500.jpg/melon/resize/40/quality/80/optimize', 'AR
+TISTNAME': '아이유'}, {'ALBUMID': '2121646', 'ALBUMNAME': '스무 살의 봄', 'ALBUMNAMEDP': '스무 살의 봄', 'ALBUMIMG': 'http://cdnimg.melon.co
+.kr/cm/album/images/021/21/646/2121646_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '2208448', 'ALBUMN
+AME': 'Modern Times', 'ALBUMNAMEDP': 'Modern Times', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/022/08/448/2208448_500.jpg/melon
+/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '2319008', 'ALBUMNAME': '마음', 'ALBUMNAMEDP': '마음', 'ALBUMIMG': 'ht
+tp://cdnimg.melon.co.kr/cm/album/images/023/19/008/2319008_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID'
+: '1173161', 'ALBUMNAME': 'Real+', 'ALBUMNAMEDP': 'Real+', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/011/73/161/1173161_500.jpg
+/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '718505', 'ALBUMNAME': 'IU...IM', 'ALBUMNAMEDP': 'IU...IM', 'ALB
+UMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/007/18/505/718505_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'},
+{'ALBUMID': '546853', 'ALBUMNAME': 'Growing Up', 'ALBUMNAMEDP': 'Growing Up', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/005/46/
+853/546853_500.jpg/melon/resize/40/quality/80/optimize', 'ARTISTNAME': '아이유'}, {'ALBUMID': '398025', 'ALBUMNAME': 'Lost And Found', 'ALBU
+MNAMEDP': 'Lost And Found', 'ALBUMIMG': 'http://cdnimg.melon.co.kr/cm/album/images/003/98/025/398025_500.jpg/melon/resize/40/quality/80/opti
+mize', 'ARTISTNAME': '아이유'}], 'KEYWORDCONTENTS': [{'KEYWORDDP': '<b>아이유</b>', 'KEYWORD': '아이유'}, {'KEYWORDDP': '<b>아이유</b> 푸르
+던', 'KEYWORD': '아이유 푸르던'}, {'KEYWORDDP': '<b>아이유</b> 무릎', 'KEYWORD': '아이유 무릎'}, {'KEYWORDDP': '<b>아이유</b> 밤편지', 'KEYW
+ORD': '아이유 밤편지'}, {'KEYWORDDP': '<b>아이유</b> Rain Drop', 'KEYWORD': '아이유 Rain Drop'}, {'KEYWORDDP': '<b>아이유</b> 있잖아 (Feat.
+마리오)', 'KEYWORD': '아이유 있잖아 (Feat. 마리오)'}, {'KEYWORDDP': '<b>아이유</b> 미아', 'KEYWORD': '아이유 미아'}, {'KEYWORDDP': '<b>아이
+유</b> 잔소리 (With 2AM 슬옹)', 'KEYWORD': '아이유 잔소리 (With 2AM 슬옹)'}, {'KEYWORDDP': '<b>아이유</b> 가을 아침', 'KEYWORD': '아이유 가
+을 아침'}, {'KEYWORDDP': '<b>아이유</b> 팔레트', 'KEYWORD': '아이유 팔레트'}, {'KEYWORDDP': '<b>아이유</b> 잠 못 드는 밤 비는 내리고', 'KEYW
+ORD': '아이유 잠 못 드는 밤 비는 내리고'}, {'KEYWORDDP': '<b>아이유</b> 좋은 날', 'KEYWORD': '아이유 좋은 날'}, {'KEYWORDDP': '<b>아이유</b>
+ 꽃갈피', 'KEYWORD': '아이유 꽃갈피'}, {'KEYWORDDP': '<b>아이유</b> 나의 옛날이야기', 'KEYWORD': '아이유 나의 옛날이야기'}, {'KEYWORDDP': '<
+b>아이유</b> 너의 의미', 'KEYWORD': '아이유 너의 의미'}], 'httpDomain': 'http://www.melon.com', 'httpsDomain': 'https://www.melon.com', 'sta
+ticDomain': 'https://static.melon.co.kr'}
