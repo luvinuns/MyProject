@@ -40,3 +40,4 @@ if __name__ == '__main__':
     #line = input()    
     #print(spellchecker(line))
     print(spellchecker('아버지가방에들어가신다'))
+    #20171001 Test comment
