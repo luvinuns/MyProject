@@ -41,3 +41,4 @@ if __name__ == '__main__':
     #print(spellchecker(line))
     print(spellchecker('아버지가방에들어가신다'))
     #20171001 Test comment
+    #20171001-2 커밋 푸쉬 테스트중
