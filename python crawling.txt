@@ -213,3 +213,24 @@ ORD': '아이유 잠 못 드는 밤 비는 내리고'}, {'KEYWORDDP': '<b>아이유</b> 좋은 날'
  꽃갈피', 'KEYWORD': '아이유 꽃갈피'}, {'KEYWORDDP': '<b>아이유</b> 나의 옛날이야기', 'KEYWORD': '아이유 나의 옛날이야기'}, {'KEYWORDDP': '<
 b>아이유</b> 너의 의미', 'KEYWORD': '아이유 너의 의미'}], 'httpDomain': 'http://www.melon.com', 'httpsDomain': 'https://www.melon.com', 'sta
 ticDomain': 'https://static.melon.co.kr'}
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+iframe
+- selenium > selenium 을 통해 페이지 요청을 해서, 렌더링된 iframe 소스를 얻기
+- requests 를 사용 > iframe src 로 요청
+
+
+
+
+1. 자바스크립트를 통해 렌더링
+2. frame을 사용
+
+
+원래 페이지에서 iframe 찾기
+
+페이지소스보기로 해당페이지가 응답이 왔는지 확인
+
+iframe 찾기
+http://goodmonitoring.com/xe/moi
