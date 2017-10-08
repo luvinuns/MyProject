@@ -1,8 +1,4 @@
 """
-크롤링을 하는데, 해당 사이트에서 무조건 iframe 으로만 서비스토록 하는 흔치않은 상황이네요.
-이런 상황에서는 selenium 을 쓸 수 밖에 없습니다. requests 를 쓰면, 따로 해당 iframe src 로 요청을 할 수 밖에 없거든요.
-selenium 을 통해 페이지 요청을 해서, 렌더링된 iframe 소스를 가져오면 되겠습니다.
-
 import os
 from selenium import webdriver
 driver = webdriver.Chrome(os.path.abspath('chromedriver'))
